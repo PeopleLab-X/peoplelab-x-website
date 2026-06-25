@@ -1,0 +1,5 @@
+# Robots.txt placeholder for PeopleLab X B2B Web App
+User-agent: *
+Allow: /
+
+Sitemap: https://peoplelabx.dk/sitemap.xml
