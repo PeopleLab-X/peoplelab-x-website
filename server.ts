@@ -247,12 +247,30 @@ app.post("/api/submit-form", async (req, res) => {
     });
   }
 
-  // Check for critical credentials
+  // Resolve critical credentials consistently across startup and request handling.
   const notionKey = cleanEnvVar(process.env.NOTION_API_KEY);
-  const dbOrgRaw = cleanEnvVar(process.env.NOTION_DATABASE_ORG);
-  const dbContactRaw = cleanEnvVar(process.env.NOTION_DATABASE_CONTACT);
-  const dbOppRaw = cleanEnvVar(process.env.NOTION_DATABASE_OPPORTUNITY);
-  const dbCallRaw = cleanEnvVar(process.env.NOTION_DATABASE_CALL);
+
+  const dbOrgRaw = getDatabaseUuid(
+    "NOTION_DATABASE_ORG",
+    process.env.NOTION_DATABASE_ORG || process.env.NOTION_DB_ORG_ID
+  ).uuid;
+
+  const dbContactRaw = getDatabaseUuid(
+    "NOTION_DATABASE_CONTACT",
+    process.env.NOTION_DATABASE_CONTACT || process.env.NOTION_DATABASE_CONTACTS_ID
+  ).uuid;
+
+  const dbOppRaw = getDatabaseUuid(
+    "NOTION_DATABASE_OPPORTUNITY",
+    process.env.NOTION_DATABASE_OPPORTUNITY || process.env.NOTION_DATABASE_OPPORTUNITIES_ID
+  ).uuid;
+
+  const dbCallRaw = getDatabaseUuid(
+    "NOTION_DATABASE_CALL",
+    process.env.NOTION_DATABASE_CALL ||
+      process.env.NOTION_DATABASE_CALL_LOG ||
+      process.env.NOTION_DATABASE_CALL_LOGS_ID
+  ).uuid;
 
   const rawMailHost = cleanEnvVar(process.env.MAIL_HOST);
   const mailHost = rawMailHost || "smtp.gmail.com";
@@ -978,11 +996,23 @@ app.post("/api/submit-indicator", async (req, res) => {
     });
   }
 
-  // Check and clean critical credentials
+  // Resolve critical credentials consistently across startup and request handling.
   const notionKey = cleanEnvVar(process.env.NOTION_API_KEY);
-  const dbOrgRaw = cleanEnvVar(process.env.NOTION_DATABASE_ORG);
-  const dbContactRaw = cleanEnvVar(process.env.NOTION_DATABASE_CONTACT);
-  const dbOppRaw = cleanEnvVar(process.env.NOTION_DATABASE_OPPORTUNITY);
+
+  const dbOrgRaw = getDatabaseUuid(
+    "NOTION_DATABASE_ORG",
+    process.env.NOTION_DATABASE_ORG || process.env.NOTION_DB_ORG_ID
+  ).uuid;
+
+  const dbContactRaw = getDatabaseUuid(
+    "NOTION_DATABASE_CONTACT",
+    process.env.NOTION_DATABASE_CONTACT || process.env.NOTION_DATABASE_CONTACTS_ID
+  ).uuid;
+
+  const dbOppRaw = getDatabaseUuid(
+    "NOTION_DATABASE_OPPORTUNITY",
+    process.env.NOTION_DATABASE_OPPORTUNITY || process.env.NOTION_DATABASE_OPPORTUNITIES_ID
+  ).uuid;
 
   const rawMailHost = cleanEnvVar(process.env.MAIL_HOST);
   const mailHost = rawMailHost || "smtp.gmail.com";
