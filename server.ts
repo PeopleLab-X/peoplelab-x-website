@@ -131,7 +131,17 @@ async function initializeDatabases(notion: Client) {
   const resOrg = resolveDatabaseIds("NOTION_DATABASE_ORG");
   const resContact = resolveDatabaseIds("NOTION_DATABASE_CONTACT");
   const resOpp = resolveDatabaseIds("NOTION_DATABASE_OPPORTUNITY");
-  const resCall = resolveDatabaseIds("NOTION_DATABASE_CALL");
+  const resCall = resolveDatabaseIds(
+
+  "NOTION_DATABASE_CALL",
+
+  process.env.NOTION_DATABASE_CALL ||
+
+    process.env.NOTION_DATABASE_CALL_LOG ||
+
+    process.env.NOTION_DATABASE_CALL_LOGS_ID
+
+);
 
   try {
     resolvedDatabasesCache.org = await resolveAndVerifyDatabase(notion, "NOTION_DATABASE_ORG", process.env.NOTION_DATABASE_ORG);
@@ -266,7 +276,7 @@ app.post("/api/submit-form", async (req, res) => {
   ).uuid;
 
   const dbCallRaw = getDatabaseUuid(
-    "NOTION_DATABASE_CALL",
+    NOTION_DATABASE_CALL,
     process.env.NOTION_DATABASE_CALL ||
       process.env.NOTION_DATABASE_CALL_LOG ||
       process.env.NOTION_DATABASE_CALL_LOGS_ID
