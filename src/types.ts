@@ -1,31 +1,17 @@
-export interface Inquiry {
-  id: string;
-  timestamp: string;
-  companyName: string;
-  website: string;
-  name: string;
-  role: string;
-  email: string;
-  phone: string;
-  format: "Reality Scan" | "Reality Check" | "Vurder hvilket format der er relevant";
-  status: "new" | "reviewed";
-}
+export type Language = 'da' | 'en';
 
-export interface ReportSample {
+export interface Pillar {
   id: string;
   title: string;
-  industry: string;
-  situation: string;
-  gaze: {
-    observation: string;
-    interpretation: string;
-    hypothesis: string;
-  };
+  subtitle: string;
+  parameters: string[];
 }
 
-export interface ReportChapter {
-  num: string;
+export interface Situation {
+  id: string;
   title: string;
+  subtitle: string;
   description: string;
-  deliverable: string;
+  trigger: string;
+  auditFocus: string[];
 }
